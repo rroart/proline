@@ -58,9 +58,13 @@ public class SIEFile {
                 width = Math.max(width, objectlist.size());
             } else {
                 size += objectlist.size();                
-                List<List> list = (List<List>) entry; 
-                for (List aList : list) {
-                    width = Math.max(width, aList.size());
+                List<Object> list = (List<Object>) entry;
+                for (Object object : list) {
+                    if (object instanceof Transaction) {
+                        width = Math.max(width, ((Transaction) object).width);
+                    } else {
+                        width = Math.max(width, ((List)object).size());
+                    }
                 }
             }
         }
@@ -73,10 +77,14 @@ public class SIEFile {
                 data[index] = objectlist.toArray(data[index]);
                 index++;
             } else {
-                List<List> list = (List<List>) entry; 
-                for (List aList : list) {
+                List<Object> list = (List<Object>) entry; 
+                for (Object object : list) {
                     data[index] = new Object[width];
-                    data[index] = aList.toArray(data[index]);
+                    if (object instanceof Transaction) {
+                        data[index] = ((Transaction) object).toArray(width);
+                    } else {
+                        data[index] = ((List) object).toArray(data[index]);
+                    }
                     index++;
                 }
             }

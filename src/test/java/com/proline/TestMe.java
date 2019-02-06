@@ -44,7 +44,7 @@ public class TestMe {
         String str = "Location \"Welcome  to india\" Bangalore " +
                 "Channai \"IT city\"  Mysore";
 
-        List<String> list = new Parse().lexAnalyze(str);
+        Object list = new Parse().lexAnalyze(str);
         System.out.println(list);
     }
 }
